@@ -1,15 +1,13 @@
-import 'package:drivers_app/authentication/signup_screen.dart';
-import 'package:drivers_app/splashScreen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:drivers_app/authentication/car_info_screen.dart';
-import 'package:drivers_app/authentication/login_screen.dart';
-import 'package:drivers_app/global/global.dart';
-import 'package:drivers_app/widgets/progress_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:users_app/authentication/signup_screen.dart';
+import 'package:users_app/global/global.dart';
+import 'package:users_app/splashScreen/splash_screen.dart';
+import 'package:users_app/widgets/progress_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -26,11 +24,11 @@ class _LoginScreenState extends State<LoginScreen> {
     } else if (passwordTextEditingController.text.isEmpty) {
       Fluttertoast.showToast(msg: "Password is required to Login");
     } else {
-      loginDriverNow();
+      loginUserNow();
     }
   }
 
-  loginDriverNow() async {
+  loginUserNow() async {
     showDialog(
         context: context,
         barrierDismissible:
@@ -57,9 +55,11 @@ class _LoginScreenState extends State<LoginScreen> {
     //we will save all this data in the firebase realtime database. Which we can see in the authentication section of our firebase
 
     if (firebaseUser != null) {
+      //here we are implementing the condition bcz the driver shouldn't login into the page of the user page
+
       DatabaseReference driversRef =
-          FirebaseDatabase.instance.ref().child("drivers");
-      //here we are implementing the condition bcz the user shouldn't login into the page of the driver
+          FirebaseDatabase.instance.ref().child("users");
+
       driversRef.child(firebaseUser.uid).once().then((driverKey) {
         final snap = driverKey.snapshot;
         if (snap.value != null) {
@@ -74,6 +74,11 @@ class _LoginScreenState extends State<LoginScreen> {
               MaterialPageRoute(builder: (c) => const MySplashScreen()));
         }
       });
+
+      // currentFirebaseUser = firebaseUser;
+      // Fluttertoast.showToast(msg: "Login Successful");
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (c) => const MySplashScreen()));
     } else {
       Navigator.pop(context); //i.e. we will disappear the ProgressDialog
       Fluttertoast.showToast(msg: "Error Occurred during Login");
@@ -94,13 +99,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Image.asset("images/logo.jpg"),
+                child: Image.asset("images/userLogo.jpg"),
               ),
               const SizedBox(
                 height: 10,
               ),
               const Text(
-                "Login as a Mechanic",
+                "Login as a User",
                 style: TextStyle(
                   fontSize: 26,
                   color: Colors.grey,

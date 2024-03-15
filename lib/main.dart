@@ -1,11 +1,8 @@
-import 'package:drivers_app/firebase_options.dart';
-import 'package:drivers_app/infoHandler/app_info.dart';
-import 'package:drivers_app/splashScreen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-//if we want to implement any methoad we should implement that method outside the widget<> build
+import 'package:users_app/infoHandler/app_info.dart';
+import 'package:users_app/splashScreen/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,20 +15,21 @@ void main() async {
       projectId: 'roadease-app-784b3',
       storageBucket: 'roadease-app-784b3.appspot.com',
       messagingSenderId: '352827242635',
-      appId: '1:352827242635:android:079ef6c94c9bc40e12bc8e',
+      appId: '1:352827242635:android:9d17f4e7b563285612bc8e',
     ),
     // options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
     MyApp(
       child: ChangeNotifierProvider(
+        //as our appInfo class is linked with the provider and we want to connect appInfo class to everyone
         create: (context) => AppInfo(),
         child: MaterialApp(
           title: 'Drivers App',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: MySplashScreen(),
+          home: const MySplashScreen(),
           debugShowCheckedModeBanner: false, //it removes debug batch
         ),
       ),

@@ -1,21 +1,24 @@
 import 'dart:async';
-import 'dart:ui';
 
-import 'package:drivers_app/assistants/assistant_methods.dart';
-import 'package:drivers_app/assistants/black_theme_google_map.dart';
-import 'package:drivers_app/global/global.dart';
-import 'package:drivers_app/infoHandler/app_info.dart';
-import 'package:drivers_app/models/user_ride_request_information.dart';
-import 'package:drivers_app/widgets/progress_dialog.dart';
+// import 'package:drivers_app/assistants/assistant_methods.dart';
+// import 'package:drivers_app/assistants/black_theme_google_map.dart';
+// import 'package:drivers_app/global/global.dart';
+// import 'package:drivers_app/infoHandler/app_info.dart';
+// import 'package:drivers_app/models/user_ride_request_information.dart';
+// import 'package:drivers_app/widgets/progress_dialog.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:users_app/assistants/assistant_methods.dart';
+import 'package:users_app/assistants/black_theme_google_map.dart';
+import 'package:users_app/global/global.dart';
+import 'package:users_app/models/user_ride_request_information.dart';
+import 'package:users_app/widgets/progress_dialog.dart';
 
 class NewTripScreen extends StatefulWidget {
   UserRideRequestInformation? userRideRequestDetails;
@@ -168,25 +171,6 @@ class _NewTripScreenState extends State<NewTripScreen> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    saveAssignedDriverDetailstoUserRideRequest();
-  }
-
-  createDriverIconMarker() {
-    if (iconAnimatedMarker == null) {
-      ImageConfiguration imageConfiguration = createLocalImageConfiguration(
-          context,
-          size: const Size(0.001, 0.001));
-      BitmapDescriptor.fromAssetImage(imageConfiguration, "images/mech.png")
-          .then((value) {
-        iconAnimatedMarker = value;
-      });
-    }
-  }
-
   getDriversLocationUpdatesAtRealTime() {
     LatLng oldLatLng = LatLng(0, 0);
 
@@ -275,7 +259,7 @@ class _NewTripScreenState extends State<NewTripScreen> {
 
   @override
   Widget build(BuildContext context) {
-    createDriverIconMarker();
+    // createDriverIconMarker();
     return Scaffold(
       body: Stack(
         children: [
@@ -445,7 +429,6 @@ class _NewTripScreenState extends State<NewTripScreen> {
                               .child("status")
                               .set(rideRequestStatus);
                         }
-                        SystemNavigator.pop();
                       },
                       style: ElevatedButton.styleFrom(
                         primary: buttonColor,

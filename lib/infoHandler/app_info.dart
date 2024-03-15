@@ -1,5 +1,5 @@
-import 'package:drivers_app/models/directions.dart';
 import 'package:flutter/foundation.dart';
+import 'package:users_app/models/directions.dart';
 
 class AppInfo extends ChangeNotifier {
   Directions? userPickUpLocation;
